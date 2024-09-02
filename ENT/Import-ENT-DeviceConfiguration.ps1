@@ -137,8 +137,8 @@ NAME: Add-DeviceConfigurationPolicy
     Write-Verbose "Resource: $DCP_resource"
 
     try {
-
-        if ($JSON -eq "" -or $null -eq $JSON) {
+        
+        if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             write-host "No JSON specified, please specify valid JSON for the Policy..." -f Red
 
@@ -350,8 +350,8 @@ NAME: Get-AADGroup
             }
 
         }
-
-        elseif ($GroupName -eq "" -or $null -eq $GroupName) {
+        
+        elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"
         (Invoke-MgGraphRequest -Uri $uri -Method Get).Value
@@ -454,7 +454,7 @@ NAME: Test-AuthHeader
 
 write-host
 
-if ($null -eq $User -or $User -eq "") {
+if ([string]::IsNullOrWhiteSpace($User)) {
 
     $User = Read-Host -Prompt "Please specify your user principal name for Azure Authentication"
     Write-Host

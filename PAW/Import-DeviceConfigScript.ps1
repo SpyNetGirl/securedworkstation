@@ -41,14 +41,11 @@ NAME: Get-AuthToken
 
     $AadModule = Get-Module -Name 'AzureADPreview' -ListAvailable
 
-    if ($AadModule -eq $null) {
+    if ($null -eq $AadModule) {
 
         Write-Host 'AzureAD PowerShell module not found, looking for AzureADPreview'
         $AadModule = Get-Module -Name 'AzureADPreview' -ListAvailable
 
-    }
-
-    if ($AadModule -eq $null) {
         Write-Host
         Write-Host 'AzureAD Powershell module not installed...' -f Red
         Write-Host "Install by running 'Install-Module AzureAD' or 'Install-Module AzureADPreview' from an elevated PowerShell prompt" -f Yellow
@@ -362,7 +359,7 @@ NAME: Get-AADGroup
 
         }
 
-        elseif ($GroupName -eq '' -or $GroupName -eq $null) {
+        elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"
             (Invoke-RestMethod -Uri $uri -Headers $authToken -Method Get).Value
@@ -439,7 +436,7 @@ if ($global:authToken) {
 
         # Defining User Principal Name if not present
 
-        if ($User -eq $null -or $User -eq '') {
+        if ([string]::IsNullOrWhiteSpace($User)) {
 
             $User = Read-Host -Prompt 'Please specify your user principal name for Azure Authentication'
             Write-Host
@@ -455,7 +452,7 @@ if ($global:authToken) {
 
 else {
 
-    if ($User -eq $null -or $User -eq '') {
+    if ([string]::IsNullOrWhiteSpace($User)) {
 
         $User = Read-Host -Prompt 'Please specify your user principal name for Azure Authentication'
         Write-Host
@@ -479,7 +476,7 @@ $AADGroup = 'Privileged Workstations'
 
 $TargetGroupId = (Get-AADGroup -GroupName "$AADGroup").id
 
-if ($TargetGroupId -eq $null -or $TargetGroupId -eq '') {
+if ([string]::IsNullOrWhiteSpace($TargetGroupId)) {
 
     Write-Host "AAD Group - '$AADGroup' doesn't exist, please specify a valid AAD Group..." -ForegroundColor Red
     Write-Host

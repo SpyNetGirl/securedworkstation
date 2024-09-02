@@ -230,12 +230,7 @@ NAME: Is-VM
 
         #region Configure additional Defender for Endpoint security recommendations that cannot be set in Configuration Profiles
         #Handle registry changes
-
-
-        Write-Log -Message "Configuring additional Defender for Endpoint security recommendations that cannot be set in Configuration Profiles"
-        # Require users to elevate when setting a network's location - prevent changing from Public to Private firewall profile
-        New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name NC_StdDomainUserSetLocation -Value 1 -PropertyType DWORD -Force
-        Write-Log -Message "Require users to elevate when setting a network's location - prevent changing from Public to Private firewall profile registry update successfully applied"
+        
         # Prevent saving of network credentials
         New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa -Name DisableDomainCreds -Value 1 -PropertyType DWORD -Force
         Write-Log -Message "Prevent saving of network credentials registry update successfully applied"
