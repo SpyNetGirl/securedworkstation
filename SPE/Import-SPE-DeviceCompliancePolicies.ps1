@@ -203,7 +203,7 @@ NAME: Get-AADGroup
             }
 
         }
-        
+
         elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"

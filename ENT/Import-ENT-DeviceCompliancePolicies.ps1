@@ -136,7 +136,7 @@ Function Add-DeviceCompliancePolicy() {
     $Resource = 'deviceManagement/deviceCompliancePolicies'
 
     try {
-        
+
         if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             Write-Host 'No JSON specified, please specify valid JSON for the iOS Policy...' -f Red
@@ -207,7 +207,7 @@ NAME: Get-AADGroup
             }
 
         }
-        
+
         elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"

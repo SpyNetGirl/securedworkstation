@@ -137,7 +137,7 @@ NAME: Add-DeviceConfigurationPolicy
     Write-Verbose "Resource: $DCP_resource"
 
     try {
-        
+
         if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             write-host "No JSON specified, please specify valid JSON for the Policy..." -f Red
@@ -350,7 +350,7 @@ NAME: Get-AADGroup
             }
 
         }
-        
+
         elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"

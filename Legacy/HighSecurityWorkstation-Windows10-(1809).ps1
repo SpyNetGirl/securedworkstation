@@ -2,7 +2,7 @@
 #
 .SYNOPSIS
 This is a script imports the High security baseline and configurations as a starting point for
-By design the sripts enable hardening and logging, and is designed to be a step towards the secured workstation.
+By design the scripts enable hardening and logging, and is designed to be a step towards the secured workstation.
 
 
 .NOTES
@@ -11,7 +11,7 @@ By design the sripts enable hardening and logging, and is designed to be a step 
 	Revised:     Frank Simorjay
     Created:     03-09-2018
 	Revised:     05-09-2019
-    Version:     1.1 hardended
+    Version:     1.1 hardened
 
 #>
 ###################################################################################################

@@ -1,4 +1,3 @@
-
 # Enterprise Profile configuration
 
 The scripts for configuring the Enterprise security baseline are located in this folder.
@@ -15,7 +14,7 @@ Set-ExecutionPolicy remotesigned
 [**MasterScript_ENT.PS1**](MasterScript-ENT.ps1) - This script is used to import the Compliance policies, Configuration profiles used to apply the Enterprise Profile settings
 
    To import the Enterprise Profile configuration settings into your tenant
-   Open powershell comsole
+   Open powershell console
    Navigate to ENT folder in Repo
    ```powershell
    .\MasterScript-ENT.ps1
@@ -26,8 +25,6 @@ Enter **username** and **password** of an account that has Intune Administrator 
 Wait for the import process to complete.
 
 The MasterScript_ENT.ps1 file calls the following scripts to import the Compliance Policies, Configuration Profiles
-
-
 
 [**Import-ENT-DeviceCompliancePolicies.ps1**](Import-ENT-DeviceCompliancePolicies.ps1) - This scripts imports the three device compliance policies for the Enterprise profile. Three policies are used to ensure that Conditional Access does not prevent a user from being able to access resources. Refer to [Windows 10 and later settings to mark devices as compliant or not compliant using Intune](https://docs.microsoft.com/en-us/mem/intune/protect/compliance-policy-create-windows)
 

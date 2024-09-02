@@ -1,16 +1,12 @@
 # Secure Workstation configuration and policy baselines for Microsoft Intune and Windows 10
 
-
-
-
 This site is the companion to the Secured Workstation how-to guidance, providing the scripts to deploy the baseline for the Enterprise, Specialized, and Privileged configurations.
 
 It is highly recommended, that you familiarize yourself with the guidance prior to cloning, or use the files in this repo. Documentation for the solution can be found at - https://aka.ms/securedworkstation
 
-
 These files are provided as samples, and a starting point to consider when you build your secured solution.
 
-**The scripts has been tested in a EN-US enviroment only, international langugages may require changes to the script for any geo location related errors.**
+**The scripts has been tested in a EN-US environment only, international languages may require changes to the script for any geo location related errors.**
 
 # Three Security Profiles
 

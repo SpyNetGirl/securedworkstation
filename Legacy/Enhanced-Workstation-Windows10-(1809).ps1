@@ -191,7 +191,7 @@ NAME: Add-DeviceConfigurationPolicy
     Write-Verbose "Resource: $DCP_resource"
 
     try {
-        
+
         if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             Write-Host 'No JSON specified, please specify valid JSON for the Android Policy...' -f Red

@@ -192,7 +192,7 @@ NAME: Add-DeviceConfigurationPolicy
     Write-Verbose "Resource: $DCP_resource"
 
     try {
-        
+
         if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             Write-Host 'No JSON specified, please specify valid JSON for the Android Policy...' -f Red
@@ -300,7 +300,7 @@ Function Add-DeviceCompliancePolicybaseline() {
     $Resource = 'deviceManagement/deviceCompliancePolicies'
 
     try {
-        
+
         if ([string]::IsNullOrWhiteSpace($JSON)) {
 
             Write-Host 'No JSON specified, please specify valid JSON for the iOS Policy...' -f Red
@@ -372,7 +372,7 @@ if ($global:authToken) {
 # Authentication doesn't exist, calling Get-AuthToken function
 
 else {
-    
+
     if ([string]::IsNullOrWhiteSpace($User)) {
         $User = Read-Host -Prompt 'Please specify your user principal name for Azure Authentication'
         Write-Host

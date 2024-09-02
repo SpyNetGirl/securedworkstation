@@ -378,7 +378,7 @@ NAME: Get-AADGroup
 				default { (Invoke-MgGraphRequest -Uri $uri -Method Get).Value }
 			}
 		}
-		
+
 		elseif ([string]::IsNullOrWhiteSpace($GroupName)) {
 
 			$uri = "https://graph.microsoft.com/$graphApiVersion/$($Group_resource)"

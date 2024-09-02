@@ -1,18 +1,16 @@
-
 # LEGACY V1 - Secure Workstation configuration and policy baselines for Microsoft Intune and Windows RS5
 
 **Content of this folder is provided as solution history...**
 
 Supporting document - https://aka.ms/securedworkstation
 
-
-This site is a companion to the Secured Workstation providing the baseline for the 5 sceanrio levels outlined in document.
+This site is a companion to the Secured Workstation providing the baseline for the 5 scenario levels outlined in document.
 
 These files are provided as samples, and a starting point to consider when you build your secured solution.
 
-**Note** The scripts have been tested in a EN-US enviroment only, as locality may impact international langugage packs.
+**Note** The scripts have been tested in a EN-US environment only, as locality may impact international language packs.
 
-# 6 sceanrios
+# 6 scenarios
 
 1. **Low Security** - No baseline provided
 2. **Enhanced Security** - Enhanced Workstation - Windows10 (1809) .ps1
@@ -21,7 +19,6 @@ These files are provided as samples, and a starting point to consider when you b
 5. **Secured** - Secure Workstation - Windows10 (1809) SecurityBaseline (90).ps1
 6. **Isolated** - No additional baseline provided
 
-
 # MMA client installer
 
-The InstallMMAforApplocker.ps1 file will download and install MMA client for monitoring. This is part of the applocker monitoring provided in the Specialized, and Secured workstation sceanrios. The data will be uploaded to Log Analytics.
+The InstallMMAforApplocker.ps1 file will download and install MMA client for monitoring. This is part of the AppLocker monitoring provided in the Specialized, and Secured workstation scenarios. The data will be uploaded to Log Analytics.

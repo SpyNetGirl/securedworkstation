@@ -230,7 +230,7 @@ NAME: Is-VM
 
         #region Configure additional Defender for Endpoint security recommendations that cannot be set in Configuration Profiles
         #Handle registry changes
-        
+
         # Prevent saving of network credentials
         New-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Control\Lsa -Name DisableDomainCreds -Value 1 -PropertyType DWORD -Force
         Write-Log -Message "Prevent saving of network credentials registry update successfully applied"

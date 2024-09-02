@@ -358,7 +358,7 @@ if ($global:authToken) {
         Write-Host
 
         # Defining User Principal Name if not present
-            
+
         if ([string]::IsNullOrWhiteSpace($User)) {
             $User = Read-Host -Prompt 'Please specify your user principal name for Azure Authentication'
             Write-Host

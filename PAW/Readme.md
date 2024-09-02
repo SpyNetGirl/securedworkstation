@@ -26,7 +26,6 @@ Wait for the import process to complete.
 
 The MasterScript_PAW.ps1 file calls the following scripts to import the Compliance Policies, Configuration Profiles
 
-
 [**Import-PAW-DeviceCompliancePolicies.ps1**](Import-PAW-DeviceCompliancePolicies.ps1) - This scripts imports the three device compliance policies for the Privileged profile. Three policies are used to ensure that Conditional Access does not prevent a user from being able to access resources. Refer to [Windows 10 and later settings to mark devices as compliant or not compliant using Intune](https://docs.microsoft.com/en-us/mem/intune/protect/compliance-policy-create-windows)
 
    1. [Privileged Compliance ATP](JSON/DeviceCompliance/PAW-Compliance-ATP.json) policy is used to feed the Threat Intelligence data from Microsoft Defender for Endpoint into the devices compliance state so its signals can be used as part of the Conditional Access evaluation process.
