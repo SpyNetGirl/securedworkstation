@@ -2,19 +2,19 @@
 #
 .SYNOPSIS
 This is a script steps up the secure workstation enforcement. It moves the Enhanced baseline to full blocking security model
-It is recommended to use the Ehanced baselie, and the 
-DeviceConfiguration_NCSC Baseline: https://www.ncsc.gov.uk/guidance/eud-guidance-windows-10-1803-mobile-device-management 
+It is recommended to use the Ehanced baselie, and the
+DeviceConfiguration_NCSC Baseline: https://www.ncsc.gov.uk/guidance/eud-guidance-windows-10-1803-mobile-device-management
 prior to enabling this set of controls. THESE CONTROLS ARE EXTREAMLY RESTRICTIVE TO THE HOST.
 
 
 .NOTES
     FileName:    Secure Workstation - Windows10 (1809) SecurityBaseline.ps1
-    Author:      Per Larsen 
+    Author:      Per Larsen
 	Revised:     Frank Simorjay
     Created:     03-09-2018
 	Revised:     05-09-2019
     Version:     1.1 hardended
-    
+
 #>
 ###################################################################################################
 <#
@@ -289,38 +289,38 @@ Function Add-DeviceCompliancePolicybaseline(){
     .NOTES
     NAME: Add-DeviceCompliancePolicy
     #>
-    
+
     [cmdletbinding()]
-    
+
     param
     (
         $JSON
     )
-    
+
     $graphApiVersion = "Beta"
     $Resource = "deviceManagement/deviceCompliancePolicies"
-        
+
         try {
-    
+
             if($JSON -eq "" -or $JSON -eq $null){
-    
+
             write-host "No JSON specified, please specify valid JSON for the iOS Policy..." -f Red
-    
+
             }
-    
+
             else {
-    
+
             Test-JSON -JSON $JSON
-    
+
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
             Invoke-RestMethod -Uri $uri -Headers $authToken -Method Post -Body $JSON -ContentType "application/json"
-    
+
             }
-    
+
         }
-        
+
         catch {
-    
+
         $ex = $_.Exception
         $errorResponse = $ex.Response.GetResponseStream()
         $reader = New-Object System.IO.StreamReader($errorResponse)
@@ -331,11 +331,11 @@ Function Add-DeviceCompliancePolicybaseline(){
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
         write-host
         break
-    
+
         }
-    
+
     }
-    
+
     ####################################################
 ####################################################
 
@@ -897,7 +897,7 @@ $System1 = @"
     "defenderScheduledScanTime":  null,
 
     "defenderScheduledQuickScanTime":  "23:00:00",
-    
+
     "defenderCloudBlockLevel":  "notConfigured",
     "defenderCloudExtendedTimeout":  null,
     "defenderCloudExtendedTimeoutInSeconds":  null,
@@ -918,7 +918,7 @@ $System1 = @"
     "passwordMinimumCharacterSetCount":  null,
 
     "passwordPreviousPasswordBlockCount":  21,
-    
+
     "passwordRequired":  true,
     "passwordRequireWhenResumeFromIdleState":  true,
     "passwordRequiredType":  "deviceDefault",
@@ -990,7 +990,7 @@ $System1 = @"
     "cortanaBlocked":  true,
     "deviceManagementBlockFactoryResetOnMobile":  false,
     "deviceManagementBlockManualUnenroll":  true,
-    
+
     "safeSearchFilter":  "strict",
 
     "edgeBlockPopups":  true,
@@ -1231,7 +1231,7 @@ $System2 = @"
                             "omaUri":  "./Device/Vendor/MSFT/Policy/Config/MSSecurityGuide/EnableStructuredExceptionHandlingOverwriteProtection",
                             "value":  "\u003cenabled/\u003e"
                         },
-                       
+
                         {
                             "@odata.type":  "#microsoft.graph.omaSettingString",
                             "displayName":  "MS Security Guide - WDigest Authentication",

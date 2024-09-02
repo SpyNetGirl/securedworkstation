@@ -11,7 +11,7 @@ param (
 	#Change Conditional Access State, default is disabled
 	#Options: enabled, disabled, enabledForReportingButNotEnforced
 	[String]$AADGroup = "Privileged Workstations"
-    
+
 )
 
 #$AADGroup = "PAW-Global-Devices"
@@ -54,7 +54,7 @@ NAME: Test-MgAuth
 		write-host "Install by running 'Install-Module Microsoft.Graph' or 'Install-Module Microsoft.Graph' from an elevated PowerShell prompt" -f Yellow
 		write-host "Script can't continue..." -f Red
 		write-host
-        
+
 	}
 
 	$scopes = @()
@@ -62,19 +62,19 @@ NAME: Test-MgAuth
 	#########################################
 	# Directory related scopes              #
 	#########################################
-	$scopes += @("Device.Read.All", 
-		"User.Read.All", 
-		"GroupMember.ReadWrite.All", 
-		"Group.ReadWrite.All", 
+	$scopes += @("Device.Read.All",
+		"User.Read.All",
+		"GroupMember.ReadWrite.All",
+		"Group.ReadWrite.All",
 		"Directory.ReadWrite.All")
 
 	#########################################
 	# Device Management scopes              #
 	#########################################
-	$scopes += @("DeviceManagementConfiguration.ReadWrite.All", 
-		"DeviceManagementServiceConfig.ReadWrite.All", 
-		"DeviceManagementRBAC.ReadWrite.All", 
-		"DeviceManagementManagedDevices.ReadWrite.All", 
+	$scopes += @("DeviceManagementConfiguration.ReadWrite.All",
+		"DeviceManagementServiceConfig.ReadWrite.All",
+		"DeviceManagementRBAC.ReadWrite.All",
+		"DeviceManagementManagedDevices.ReadWrite.All",
 		"DeviceManagementApps.ReadWrite.All")
 
 
@@ -114,11 +114,11 @@ NAME: Test-MgAuth
 	}
 
 }
-	
+
 ####################################################
-	
+
 Function Create-GroupPolicyConfigurations() {
-		
+
 	<#
 .SYNOPSIS
 This function is used to add an device configuration policy using the Graph API REST interface
@@ -130,49 +130,49 @@ Adds a device configuration policy in Intune
 .NOTES
 NAME: Add-DeviceConfigurationPolicy
 #>
-		
+
 	[cmdletbinding()]
 	param
 	(
 		$DisplayName
 	)
-		
+
 	$jsonCode = @"
 {
     "description":"",
     "displayName":"$($DisplayName)"
 }
 "@
-		
+
 	$graphApiVersion = "Beta"
 	$DCP_resource = "deviceManagement/groupPolicyConfigurations"
 	Write-Verbose "Resource: $DCP_resource"
-		
+
 	try {
-			
+
 		$uri = "https://graph.microsoft.com/$graphApiVersion/$($DCP_resource)"
 		$responseBody = Invoke-MgGraphRequest -Uri $uri -Method Post -Body $jsonCode -ContentType "application/json"
-			
-			
+
+
 	}
-		
+
 	catch {
-			
+
 		$ex = $_.Exception
-        
+
 
 		Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
 		Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
 		write-host
 		break
-			
+
 	}
 	$responseBody.id
 }
-	
-	
+
+
 Function Create-GroupPolicyConfigurationsDefinitionValues() {
-		
+
 	<#
     .SYNOPSIS
     This function is used to get device configuration policies from the Graph API REST interface
@@ -184,55 +184,55 @@ Function Create-GroupPolicyConfigurationsDefinitionValues() {
     .NOTES
     NAME: Get-GroupPolicyConfigurations
     #>
-		
+
 	[cmdletbinding()]
 	Param (
-			
+
 		[string]$GroupPolicyConfigurationID,
 		$JSON
-			
+
 	)
-		
+
 	$graphApiVersion = "Beta"
-		
+
 	$DCP_resource = "deviceManagement/groupPolicyConfigurations/$($GroupPolicyConfigurationID)/definitionValues"
 	write-host $DCP_resource
 	try {
 		if ($JSON -eq "" -or $null -eq $JSON) {
-				
+
 			write-host "No JSON specified, please specify valid JSON for the Device Configuration Policy..." -f Red
-				
+
 		}
-			
+
 		else {
-				
+
 			Test-JSON -JSON $JSON
-				
+
 			$uri = "https://graph.microsoft.com/$graphApiVersion/$($DCP_resource)"
 			Invoke-MgGraphRequest -Uri $uri -Method Post -Body $JSON -ContentType "application/json"
 		}
-			
+
 	}
-		
+
 	catch {
-			
+
 		$ex = $_.Exception
-        
+
 
 		Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
 		Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
 		write-host
 		break
-			
+
 	}
-		
+
 }
-	
-	
+
+
 ####################################################
 
 Function Get-GroupPolicyConfigurations() {
-	
+
 	<#
 .SYNOPSIS
 This function is used to get device configuration policies from the Graph API REST interface
@@ -244,7 +244,7 @@ Returns any device configuration policies configured in Intune
 .NOTES
 NAME: Get-GroupPolicyConfigurations
 #>
-	
+
 	[cmdletbinding()]
 
 	param
@@ -252,29 +252,29 @@ NAME: Get-GroupPolicyConfigurations
 		$name
 	)
 
-	
+
 	$graphApiVersion = "Beta"
 	$DCP_resource = "deviceManagement/groupPolicyConfigurations"
-	
+
 	try {
-		
+
 		$uri = "https://graph.microsoft.com/$graphApiVersion/$($DCP_resource)"
 		(Invoke-MgGraphRequest -Uri $uri -Method Get).Value | Where-Object { ($_.'displayName') -eq ("$Name") }
-		
+
 	}
-	
+
 	catch {
-		
+
 		$ex = $_.Exception
-        
+
 
 		Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
 		Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
 		write-host
 		break
-		
+
 	}
-	
+
 }
 
 ####################################################
@@ -304,7 +304,7 @@ NAME: Add-DeviceConfigurationPolicyAssignment
 
 	$graphApiVersion = "Beta"
 	$Resource = "deviceManagement/groupPolicyConfigurations/$ConfigurationPolicyId/assignments"
-    
+
 	try {
 
 		if (!$ConfigurationPolicyId) {
@@ -318,7 +318,7 @@ NAME: Add-DeviceConfigurationPolicyAssignment
 
 			write-host "No Target Group Id specified, specify a valid Target Group Id" -f Red
 			break
-        
+
 		}
 		if (!$Assignment) {
 
@@ -343,11 +343,11 @@ NAME: Add-DeviceConfigurationPolicyAssignment
 		Invoke-MgGraphRequest -Uri $uri -Method Post -Body $JSON -ContentType "application/json"
 
 	}
-    
+
 	catch {
 
 		$ex = $_.Exception
-        
+
 
 		Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
 		Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -400,7 +400,7 @@ NAME: Get-AADGroup
 				$AllDevices { $grp = [PSCustomObject]@{ displayName = "All devices" }; $grp }
 				default { (Invoke-MgGraphRequest -Uri $uri -Method Get).Value }
 			}
-                
+
 		}
 
 		elseif ($GroupName -eq "" -or $null -eq $GroupName) {
@@ -445,7 +445,7 @@ NAME: Get-AADGroup
 	catch {
 
 		$ex = $_.Exception
-        
+
 
 		Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
 		Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -459,7 +459,7 @@ NAME: Get-AADGroup
 ####################################################
 
 Function Test-JSON() {
-		
+
 	<#
 .SYNOPSIS
 This function is used to test if the JSON passed to a REST Post request is valid
@@ -471,57 +471,57 @@ Test if the JSON is valid before calling the Graph REST interface
 .NOTES
 NAME: Test-AuthHeader
 #>
-		
+
 	param (
-			
+
 		$JSON
-			
+
 	)
-		
+
 	try {
-			
+
 		$TestJSON = ConvertFrom-Json $JSON -ErrorAction Stop
 		$validJson = $true
-			
+
 	}
-		
+
 	catch {
-			
+
 		$validJson = $false
 		$_.Exception
-			
+
 	}
-		
+
 	if (!$validJson) {
-			
+
 		Write-Host "Provided JSON isn't in valid JSON format" -f Red
 		break
-			
+
 	}
-		
+
 }
-	
+
 ####################################################
-	
+
 #region Authentication
-	
+
 write-host
-	
+
 # Defining User Principal Name if not present
 if ($null -eq $User -or $User -eq "") {
-			
+
 	$User = Read-Host -Prompt "Please specify your user principal name for Azure Authentication"
 	Write-Host
 }
-		
+
 # Getting the authorization token
 Test-MgAuth -User $User
-		
-	
+
+
 #endregion
-	
+
 ####################################################
-	
+
 
 # Replacing quotes for Test-Path
 $ImportPath = $ImportPath.replace('"', '')
@@ -532,7 +532,7 @@ if (!(Test-Path "$ImportPath")) {
 	Write-Host "Script can't continue..." -ForegroundColor Red
 	Write-Host
 	break
-		
+
 }
 
 ####################################################
@@ -552,27 +552,27 @@ if ($null -eq $TargetGroupId  -or $TargetGroupId -eq "") {
 
 
 
-Get-ChildItem $ImportPath -filter *.json |  
+Get-ChildItem $ImportPath -filter *.json |
 
 ForEach-Object {
 
 	$Policy_Name = $_.Name
 	$Policy_Name = $Policy_Name.Substring(0, $Policy_Name.Length - 5)
-	
+
 	$DuplicateDCP = Get-GroupPolicyConfigurations -Name $Policy_Name
 
-	If ($DuplicateDCP -eq $null) 
+	If ($DuplicateDCP -eq $null)
  {
 
 		$GroupPolicyConfigurationID = Create-GroupPolicyConfigurations -DisplayName $Policy_Name
 		$JSON_Data = Get-Content $_.FullName
 		$JSON_Convert = $JSON_Data | ConvertFrom-Json
 		$JSON_Convert | ForEach-Object { $_
-    
+
 			$JSON_Output = Convertto-Json -Depth 5 $_
 
 			Write-Host $JSON_Output
-			Create-GroupPolicyConfigurationsDefinitionValues -JSON $JSON_Output -GroupPolicyConfigurationID $GroupPolicyConfigurationID 
+			Create-GroupPolicyConfigurationsDefinitionValues -JSON $JSON_Output -GroupPolicyConfigurationID $GroupPolicyConfigurationID
 		}
 		Write-Host "####################################################################################################" -ForegroundColor Green
 		Write-Host "Policy: " $Policy_Name "created" -ForegroundColor Green
@@ -581,11 +581,11 @@ ForEach-Object {
 		$DeviceConfigs = Get-GroupPolicyConfigurations -name $Policy_Name
 
 		$DeviceConfigID = $DeviceConfigs.id
-	
+
 		Add-GroupPolicyConfigurationPolicyAssignment -ConfigurationPolicyId $DeviceConfigID -TargetGroupId $TargetGroupId -Assignment "groupAssignmentTarget"
 	}
 
-	else 
+	else
  {
 		write-host "Device Configuration ADMX Profile:" $Policy_Name "has already been created" -ForegroundColor Yellow
 	}

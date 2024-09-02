@@ -48,7 +48,7 @@ NAME: Test-MgAuth
         write-host "Install by running 'Install-Module Microsoft.Graph' or 'Install-Module Microsoft.Graph' from an elevated PowerShell prompt" -f Yellow
         write-host "Script can't continue..." -f Red
         write-host
-        
+
     }
 
     $scopes = @()
@@ -56,19 +56,19 @@ NAME: Test-MgAuth
     #########################################
     # Directory related scopes              #
     #########################################
-    $scopes += @("Device.Read.All", 
-        "User.Read.All", 
-        "GroupMember.ReadWrite.All", 
-        "Group.ReadWrite.All", 
+    $scopes += @("Device.Read.All",
+        "User.Read.All",
+        "GroupMember.ReadWrite.All",
+        "Group.ReadWrite.All",
         "Directory.ReadWrite.All")
 
     #########################################
     # Device Management scopes              #
     #########################################
-    $scopes += @("DeviceManagementConfiguration.ReadWrite.All", 
-        "DeviceManagementServiceConfig.ReadWrite.All", 
-        "DeviceManagementRBAC.ReadWrite.All", 
-        "DeviceManagementManagedDevices.ReadWrite.All", 
+    $scopes += @("DeviceManagementConfiguration.ReadWrite.All",
+        "DeviceManagementServiceConfig.ReadWrite.All",
+        "DeviceManagementRBAC.ReadWrite.All",
+        "DeviceManagementManagedDevices.ReadWrite.All",
         "DeviceManagementApps.ReadWrite.All")
 
 
@@ -124,36 +124,36 @@ Function Add-DeviceCompliancePolicy() {
     .NOTES
     NAME: Add-DeviceCompliancePolicy
     #>
-    
+
     [cmdletbinding()]
-    
+
     param
     (
         $JSON
     )
-    
+
     $graphApiVersion = "Beta"
     $Resource = "deviceManagement/deviceCompliancePolicies"
-        
+
     try {
-    
+
         if ($JSON -eq "" -or $null -eq $JSON) {
-    
+
             write-host "No JSON specified, please specify valid JSON for the iOS Policy..." -f Red
-    
+
         }
-    
+
         else {
-    
+
             Test-JSON -JSON $JSON
-    
+
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
             Invoke-MgGraphRequest -Uri $uri -Method Post -Body $JSON -ContentType "application/json"
         }
     }
     catch {
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -161,7 +161,7 @@ Function Add-DeviceCompliancePolicy() {
         break
     }
 }
-    
+
 ####################################################
 
 
@@ -205,7 +205,7 @@ NAME: Get-AADGroup
                 $AllDevices { $grp = [PSCustomObject]@{ displayName = "All devices" }; $grp }
                 default { (Invoke-MgGraphRequest -Uri $uri -Method Get).Value }
             }
-                
+
         }
 
         elseif ($GroupName -eq "" -or $null -eq $GroupName) {
@@ -250,7 +250,7 @@ NAME: Get-AADGroup
     catch {
 
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -279,37 +279,37 @@ Function Get-DeviceCompliancePolicy() {
     .NOTES
     NAME: Get-DeviceCompliancePolicy
     #>
-    
+
     [cmdletbinding()]
-    
+
     param
     (
         $Name
     )
     $graphApiVersion = "Beta"
     $Resource = "deviceManagement/deviceCompliancePolicies"
-        
+
     try {
-    
+
         $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
             (Invoke-MgGraphRequest -Uri $uri -Method Get).Value | Where-Object { ($_.'@odata.type').contains("windows10CompliancePolicy") -and ($_.'displayName').contains($Name) }
-    
+
     }
-        
+
     catch {
-    
+
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
         write-host
         break
-    
+
     }
-    
+
 }
-    
+
 
 
 ####################################################
@@ -327,34 +327,34 @@ Function Add-DeviceCompliancePolicyAssignment() {
     .NOTES
     NAME: Add-DeviceCompliancePolicyAssignment
     #>
-    
+
     [cmdletbinding()]
-    
+
     param
     (
         $CompliancePolicyId,
         $ComplianceAssignments
     )
-    
+
     $graphApiVersion = "v1.0"
     $Resource = "deviceManagement/deviceCompliancePolicies/$CompliancePolicyId/assign"
-        
+
     try {
-    
+
         if (!$CompliancePolicyId) {
-    
+
             write-host "No Compliance Policy Id specified, specify a valid Compliance Policy Id" -f Red
             break
-    
+
         }
-    
+
         if (!$ComplianceAssignments) {
 
             write-host "No Target Group Id specified, specify a valid Target Group Id" -f Red
             break
-                
+
         }
-    
+
         $JSON = @"
 
 {
@@ -368,23 +368,23 @@ Function Add-DeviceCompliancePolicyAssignment() {
 
         $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
         Invoke-MgGraphRequest -Uri $uri -Method Post -Body $JSON -ContentType "application/json"
-        
-    
+
+
     }
-        
+
     catch {
-    
+
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
         write-host
         break
     }
-    
+
 }
-    
+
 ####################################################
 
 Function Test-JSON() {
@@ -422,7 +422,7 @@ NAME: Test-AuthHeader
     }
 
     if (!$validJson) {
-    
+
         Write-Host "Provided JSON isn't in valid JSON format" -f Red
         break
 
@@ -483,7 +483,7 @@ Foreach-object {
 
 
         # Adding Scheduled Actions Rule to JSON
-        #$scheduledActionsForRule = '"scheduledActionsForRule":[{"ruleName":"PasswordRequired","scheduledActionConfigurations":[{"actionType":"block","gracePeriodHours":0,"notificationTemplateId":"","notificationMessageCCList":[]}]}]'        
+        #$scheduledActionsForRule = '"scheduledActionsForRule":[{"ruleName":"PasswordRequired","scheduledActionConfigurations":[{"actionType":"block","gracePeriodHours":0,"notificationTemplateId":"","notificationMessageCCList":[]}]}]'
 
         #$JSON_Output = $JSON_Output.trimend("}")
 
@@ -491,7 +491,7 @@ Foreach-object {
 
         # Joining the JSON together
         #$JSON_Output = $JSON_Output + $scheduledActionsForRule + "`r`n" + "}"
-            
+
         write-host
         write-host "Device Configuration Policy '$DisplayName' Found..." -ForegroundColor Yellow
         write-host
@@ -511,7 +511,7 @@ Foreach-object {
 
         $ComplianceAssignments = @()
 
-        foreach ($AADGroup in $AADGroups ) 
+        foreach ($AADGroup in $AADGroups )
 
         {
             Write-Host "AAD Group Name:" $AADGroup.groupId -ForegroundColor Yellow
@@ -520,7 +520,7 @@ Foreach-object {
             $TargetGroupId = $TargetGroupId.id
             Write-Host "Included Group ID:" $TargetGroupID -ForegroundColor Yellow
 
-            $Assignment = $AADGroup."@OData.type"                           
+            $Assignment = $AADGroup."@OData.type"
             $GroupAdd = @"
      {
             "target": {
@@ -530,17 +530,17 @@ Foreach-object {
        },
 
 "@
-                
+
             $ComplianceAssignments += $GroupAdd
         }
-               
-        Add-DeviceCompliancePolicyAssignment -ComplianceAssignments $ComplianceAssignments -CompliancePolicyId $CompliancePolicyId
-                  
-    }          
 
-    else 
+        Add-DeviceCompliancePolicyAssignment -ComplianceAssignments $ComplianceAssignments -CompliancePolicyId $CompliancePolicyId
+
+    }
+
+    else
     {
         write-host "Device Compliance Policy:" $JSON_Convert.displayName "has already been created" -ForegroundColor Yellow
     }
 
-}   
+}

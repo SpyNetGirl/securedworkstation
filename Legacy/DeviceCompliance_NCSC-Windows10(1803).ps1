@@ -1,19 +1,19 @@
 <##################################################################################################
 #
 .SYNOPSIS
-This is a script steps up the NSCS workstation compliance settings For DeviceConfiguration_NCSC 
-Baseline: https://www.ncsc.gov.uk/guidance/eud-guidance-windows-10-1803-mobile-device-management 
+This is a script steps up the NSCS workstation compliance settings For DeviceConfiguration_NCSC
+Baseline: https://www.ncsc.gov.uk/guidance/eud-guidance-windows-10-1803-mobile-device-management
 
 
 
 .NOTES
     FileName:    DeviceCompliance_NCSC - Windows10 (1803).ps1
-    Author:      Per Larsen 
+    Author:      Per Larsen
 	Revised:     Frank Simorjay
     Created:     03-09-2018
 	Revised:     05-09-2019
-    Version:     1.0 
-    
+    Version:     1.0
+
 #>
 ###################################################################################################
 <#
@@ -288,38 +288,38 @@ Function Add-DeviceCompliancePolicybaseline(){
     .NOTES
     NAME: Add-DeviceCompliancePolicy
     #>
-    
+
     [cmdletbinding()]
-    
+
     param
     (
         $JSON
     )
-    
+
     $graphApiVersion = "Beta"
     $Resource = "deviceManagement/deviceCompliancePolicies"
-        
+
         try {
-    
+
             if($JSON -eq "" -or $JSON -eq $null){
-    
+
             write-host "No JSON specified, please specify valid JSON for the iOS Policy..." -f Red
-    
+
             }
-    
+
             else {
-    
+
             Test-JSON -JSON $JSON
-    
+
             $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
             Invoke-RestMethod -Uri $uri -Headers $authToken -Method Post -Body $JSON -ContentType "application/json"
-    
+
             }
-    
+
         }
-        
+
         catch {
-    
+
         $ex = $_.Exception
         $errorResponse = $ex.Response.GetResponseStream()
         $reader = New-Object System.IO.StreamReader($errorResponse)
@@ -330,11 +330,11 @@ Function Add-DeviceCompliancePolicybaseline(){
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
         write-host
         break
-    
+
         }
-    
+
     }
-    
+
     ####################################################
 ####################################################
 

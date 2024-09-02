@@ -48,7 +48,7 @@ NAME: Test-MgAuth
         write-host "Install by running 'Install-Module Microsoft.Graph' or 'Install-Module Microsoft.Graph' from an elevated PowerShell prompt" -f Yellow
         write-host "Script can't continue..." -f Red
         write-host
-        
+
     }
 
     $scopes = @()
@@ -56,19 +56,19 @@ NAME: Test-MgAuth
     #########################################
     # Directory related scopes              #
     #########################################
-    $scopes += @("Device.Read.All", 
-        "User.Read.All", 
-        "GroupMember.ReadWrite.All", 
-        "Group.ReadWrite.All", 
+    $scopes += @("Device.Read.All",
+        "User.Read.All",
+        "GroupMember.ReadWrite.All",
+        "Group.ReadWrite.All",
         "Directory.ReadWrite.All")
 
     #########################################
     # Device Management scopes              #
     #########################################
-    $scopes += @("DeviceManagementConfiguration.ReadWrite.All", 
-        "DeviceManagementServiceConfig.ReadWrite.All", 
-        "DeviceManagementRBAC.ReadWrite.All", 
-        "DeviceManagementManagedDevices.ReadWrite.All", 
+    $scopes += @("DeviceManagementConfiguration.ReadWrite.All",
+        "DeviceManagementServiceConfig.ReadWrite.All",
+        "DeviceManagementRBAC.ReadWrite.All",
+        "DeviceManagementManagedDevices.ReadWrite.All",
         "DeviceManagementApps.ReadWrite.All")
 
 
@@ -156,7 +156,7 @@ NAME: Add-DeviceConfigurationPolicy
     catch {
 
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -194,7 +194,7 @@ NAME: Add-DeviceConfigurationPolicyAssignment
 
     $graphApiVersion = "Beta"
     $Resource = "deviceManagement/deviceConfigurations/$ConfigurationPolicyId/assignments"
-    
+
     try {
 
         if (!$ConfigurationPolicyId) {
@@ -208,7 +208,7 @@ NAME: Add-DeviceConfigurationPolicyAssignment
 
             write-host "No Target Group Id specified, specify a valid Target Group Id" -f Red
             break
-        
+
         }
         if (!$Assignment) {
 
@@ -232,11 +232,11 @@ NAME: Add-DeviceConfigurationPolicyAssignment
         $uri = "https://graph.microsoft.com/$graphApiVersion/$($Resource)"
         Invoke-MgGraphRequest -Uri $uri -Method Post -Body $JSON -ContentType "application/json"
     }
-    
+
     catch {
 
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -295,7 +295,7 @@ NAME: Get-DeviceConfigurationPolicy
     catch {
 
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -348,7 +348,7 @@ NAME: Get-AADGroup
                 $AllDevices { $grp = [PSCustomObject]@{ displayName = "All devices" }; $grp }
                 default { (Invoke-MgGraphRequest -Uri $uri -Method Get).Value }
             }
-                
+
         }
 
         elseif ($GroupName -eq "" -or $null -eq $GroupName) {
@@ -393,7 +393,7 @@ NAME: Get-AADGroup
     catch {
 
         $ex = $_.Exception
-        
+
 
         Write-Host "Response content:`n$($ex.Response.Content.ReadAsStringAsync().Result)" -f Red
         Write-Error "Request to $Uri failed with HTTP Status $($ex.Response.StatusCode) $($ex.Response.StatusDescription)"
@@ -440,7 +440,7 @@ NAME: Test-AuthHeader
     }
 
     if (!$validJson) {
-    
+
         Write-Host "Provided JSON isn't in valid JSON format" -f Red
         break
 
@@ -510,7 +510,7 @@ Foreach-object {
 
     If ($DuplicateDCP -eq $null) {
         $JSON_Output = $JSON_Convert | ConvertTo-Json -Depth 5
-            
+
         write-host
         write-host "Device Configuration Policy '$DisplayName' Found..." -ForegroundColor Yellow
         write-host
@@ -524,33 +524,33 @@ Foreach-object {
 
         $DeviceConfigID = $DeviceConfigs.id
 
-        Write-Host "Device ConfigID '$DeviceConfigID'" -ForegroundColor Yellow 
+        Write-Host "Device ConfigID '$DeviceConfigID'" -ForegroundColor Yellow
         Write-Host
         $AADGroups = $JSON_Convert.assignments.target
 
-        foreach ($AADGroup in $AADGroups ) 
+        foreach ($AADGroup in $AADGroups )
         {
             Write-Host "AAD Group Name:" $AADGroup.groupId -ForegroundColor Yellow
             Write-Host "Assignment Type:" $AADGroup."@OData.type" -ForegroundColor Yellow
-       
+
             $TargetGroupId = (Get-AADGroup -GroupName $AADGroup.groupid)
             Write-Host "Included Group ID:" $TargetGroupID.Id -ForegroundColor Yellow
-            Add-DeviceConfigurationPolicyAssignment -ConfigurationPolicyId $DeviceConfigID -TargetGroupId $TargetGroupId.id -Assignment $AADGroup."@OData.type" 
+            Add-DeviceConfigurationPolicyAssignment -ConfigurationPolicyId $DeviceConfigID -TargetGroupId $TargetGroupId.id -Assignment $AADGroup."@OData.type"
         }
-        
+
         # Create exclude Group
-    
+
         <#$ShortName =  $JSON_Convert.displayName -replace "PAW-Global-2009-Intune-Configuration-", ''
-    $ExcludeGroup = "PAW-"+$ShortName+"-Exclude-Device"    
+    $ExcludeGroup = "PAW-"+$ShortName+"-Exclude-Device"
         If (Get-AzureADGroup -SearchString $ExcludeGroup) {
             Write-Host
             Write-Host "AAD group" $ExcludeGroup "already exists!" -f Yellow
             Write-Host
         }
         Else {
-        
+
             $MailNickName = $ShortName+"-G"
-             
+
             try
             {
                 $ExcludeTargetGroup = New-AzureADGroup -DisplayName $ExcludeGroup -Description $ExcludeGroup"-Group" -MailEnabled $false -SecurityEnabled $true -MailNickName $MailNickName
@@ -563,13 +563,13 @@ Foreach-object {
               Write-Host
             }
 
-            } 
-        
+            }
+
     Write-Host "Excluded Group ID" $ExcludeTargetGroup.objectid
     Add-DeviceConfigurationPolicyAssignment -ConfigurationPolicyId $DeviceConfigID -TargetGroupId $ExcludeTargetGroup.objectid -Assignment "exclusionGroupAssignmentTarget"
  #>
     }
-     
+
     else {
         write-host "Device Configuration Profile:" $JSON_Convert.displayName "has already been created" -ForegroundColor Yellow
     }
