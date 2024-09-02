@@ -25,7 +25,7 @@ Authenticates you with the Graph API interface
 NAME: Get-AuthToken
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -165,7 +165,7 @@ Adds a device management script from a URL in Intune
 .NOTES
 NAME: Add-DeviceManagementScript
 #>
-    [cmdletbinding()]
+    [CmdletBinding()]
     Param (
         # Path or URL to Powershell-script to add to Intune
         [Parameter(Mandatory = $true)]
@@ -264,7 +264,7 @@ Adds a device configuration policy assignment in Intune
 NAME: Add-DeviceConfigurationPolicyAssignment
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -340,7 +340,7 @@ Returns all users registered with Azure AD
 NAME: Get-AADGroup
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (

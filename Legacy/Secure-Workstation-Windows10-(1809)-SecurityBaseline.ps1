@@ -41,7 +41,7 @@ Authenticates you with the Graph API interface
 NAME: Get-AuthToken
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -181,7 +181,7 @@ Adds a device configuration policy in Intune
 NAME: Add-DeviceConfigurationPolicy
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -290,7 +290,7 @@ Function Add-DeviceCompliancePolicybaseline() {
     NAME: Add-DeviceCompliancePolicy
     #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (

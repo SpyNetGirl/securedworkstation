@@ -2,7 +2,7 @@
 #
 .SYNOPSIS
 This is a script imports the Enhanced security baseline and configurations as a starting point for
-By design the sripts enable hardening and logging, and is designed to be a step towards the secured workstation.
+By design the scripts enable hardening and logging, and is designed to be a step towards the secured workstation.
 
 
 .NOTES
@@ -11,7 +11,7 @@ By design the sripts enable hardening and logging, and is designed to be a step 
 	Revised:     Frank Simorjay
     Created:     03-09-2018
 	Revised:     05-09-2019
-    Version:     1.1 hardended
+    Version:     1.1 hardened
 
 #>
 ###################################################################################################
@@ -39,7 +39,7 @@ Authenticates you with the Graph API interface
 NAME: Get-AuthToken
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -179,7 +179,7 @@ Adds a device configuration policy in Intune
 NAME: Add-DeviceConfigurationPolicy
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -288,7 +288,7 @@ Function Add-DeviceCompliancePolicybaseline() {
     NAME: Add-DeviceCompliancePolicy
     #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (

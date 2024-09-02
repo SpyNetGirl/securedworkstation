@@ -23,7 +23,7 @@ Authenticates you with the Graph API interface
 NAME: Test-MgAuth
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (

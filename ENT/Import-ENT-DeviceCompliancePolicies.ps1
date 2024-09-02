@@ -26,7 +26,7 @@ Authenticates you with the Graph API interface
 NAME: Test-MgAuth
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -125,7 +125,7 @@ Function Add-DeviceCompliancePolicy() {
     NAME: Add-DeviceCompliancePolicy
     #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -179,7 +179,7 @@ Returns all users registered with Azure AD
 NAME: Get-AADGroup
 #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -280,7 +280,7 @@ Function Get-DeviceCompliancePolicy() {
     NAME: Get-DeviceCompliancePolicy
     #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (
@@ -328,7 +328,7 @@ Function Add-DeviceCompliancePolicyAssignment() {
     NAME: Add-DeviceCompliancePolicyAssignment
     #>
 
-    [cmdletbinding()]
+    [CmdletBinding()]
 
     param
     (

@@ -32,7 +32,7 @@ Authenticates you with the Graph API interface
 NAME: Test-MgAuth
 #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 
 	param
 	(
@@ -129,7 +129,7 @@ Adds a device configuration policy in Intune
 NAME: Add-DeviceConfigurationPolicy
 #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 	param
 	(
 		$DisplayName
@@ -179,7 +179,7 @@ Function Create-GroupPolicyConfigurationsDefinitionValues() {
     NAME: Get-GroupPolicyConfigurations
     #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 	Param (
 
 		[string]$GroupPolicyConfigurationID,
@@ -231,7 +231,7 @@ Returns any device configuration policies configured in Intune
 NAME: Get-GroupPolicyConfigurations
 #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 
 	param
 	(
@@ -277,7 +277,7 @@ Adds a device configuration policy assignment in Intune
 NAME: Add-DeviceConfigurationPolicyAssignment
 #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 
 	param
 	(
@@ -356,7 +356,7 @@ Returns all users registered with Azure AD
 NAME: Get-AADGroup
 #>
 
-	[cmdletbinding()]
+	[CmdletBinding()]
 
 	param
 	(
